@@ -1,0 +1,32 @@
+.todo-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    width: 80%;
+    height: 45px;
+    margin-bottom: 8px;
+    background-color: rgb(237, 237, 237);
+    border-radius: 8px;
+}
+
+.todo-card-content{
+    display: flex;
+    align-items: center;
+}
+
+.todo-value{
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.todo-checkbox{
+    width: 20px;
+    height: 20px;
+}
+
+.trash-icon{
+    width: auto;
+    height: 25px;
+    cursor: pointer;
+}
