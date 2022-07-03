@@ -1,7 +1,8 @@
 const itemService = require("../services/itemService");
 
 async function createTodo(req, res) {
-  let data = await itemService.addTodo(req.body.value);
+  const value = req.body.value;
+  let data = await itemService.addTodo(value);
   res.status(200).json(data);
 }
 
@@ -12,7 +13,8 @@ async function getAll(req, res) {
 }
 
 async function deleteTodo(req, res) {
-  const data = await itemService.deleteTodo(req.params.id);
+  const id = req.params.id;
+  const data = await itemService.deleteTodo(id);
   res.status(200).json(data);
 }
 
@@ -22,7 +24,9 @@ async function deleteAll(req, res) {
 }
 
 async function updateTodoStatus(req, res) {
-  const data = await itemService.updateStatus(req.params.id, req.body.status);
+  const id = req.params.id;
+  const status = req.body.status;
+  const data = await itemService.updateStatus(id, status);
   res.status(200).json(data);
 }
 

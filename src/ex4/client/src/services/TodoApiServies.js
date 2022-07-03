@@ -5,7 +5,7 @@ async function apiGetTodos() {
     const { data } = await axios.get("/item");
     return data;
   } catch (error) {
-    console.log("Error:", error);
+    throw new Error("Canot connect to server, please try again later");
   }
 }
 

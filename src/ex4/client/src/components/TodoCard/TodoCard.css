@@ -24,9 +24,14 @@
     width: 20px;
     height: 20px;
 }
+.todo-checkbox:hover{
+    box-shadow: 0px 0px 2px rgb(0, 0, 0);
+}
 
 .trash-icon{
-    width: auto;
-    height: 25px;
     cursor: pointer;
+}
+
+.trash-icon:hover{
+    color:rgb(248, 59, 59);
 }

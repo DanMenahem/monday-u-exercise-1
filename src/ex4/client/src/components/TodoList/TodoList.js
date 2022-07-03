@@ -1,6 +1,7 @@
 import React from "react";
 import TodoCard from "../TodoCard/TodoCard";
 import "./TodoList.css";
+import PropTypes from "prop-types";
 
 const TodoList = ({ todos, setTodos }) => {
   const TodoCardElement = todos.map((todo) => {
@@ -8,7 +9,7 @@ const TodoList = ({ todos, setTodos }) => {
       <TodoCard
         key={todo.id}
         id={todo.id}
-        value={todo.itemName}
+        value={todo.name}
         status={todo.status}
         todos={todos}
         setTodos={setTodos}
@@ -17,6 +18,11 @@ const TodoList = ({ todos, setTodos }) => {
   });
 
   return <ul className="todo-list">{TodoCardElement}</ul>;
+};
+
+TodoList.propTypes = {
+  todos: PropTypes.array.isRequired,
+  setTodos: PropTypes.func.isRequired,
 };
 
 export default TodoList;

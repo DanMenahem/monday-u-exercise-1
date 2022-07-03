@@ -1,52 +1,41 @@
 // The ItemManager should go here. Remember that you have to export it.
 const pokemonClient = require("../clients/pokemon_client");
-const { Item } = require("../db/models");
+const ItemDOAService = require("../dataAccess/ItemDOAService");
 
 async function getAll() {
-  return await Item.findAll();
+  return await ItemDOAService.fetchAll();
 }
 
 async function addTodo(itemValue) {
   if (isNumber(itemValue)) {
     return await fetchAndAddPokemon(itemValue);
-  } else if (isList(itemValue)) {
+  } else if (isNumberList(itemValue)) {
     return await fetchAndAddManyPokemon(itemValue);
   } else {
-    return await Item.create({ itemName: itemValue });
+    return await ItemDOAService.createItem(itemValue);
   }
 }
 
 async function deleteTodo(id) {
-  await Item.destroy({
-    where: { id },
-  });
+  await ItemDOAService.deleteItem(id);
 }
 
 async function deleteAll() {
-  await Item.destroy({
-    where: {},
-    truncate: true,
-    restartIdentity: true,
-  });
+  await ItemDOAService.deleteAllitems();
 }
 
 async function updateStatus(id, status) {
-  await Item.update(
-    { status },
-    {
-      where: { id },
-    }
-  );
+  await ItemDOAService.updateItemStatus(id, status);
 }
 
 async function fetchAndAddPokemon(itemValue) {
   try {
     const { name } = await pokemonClient.getPokemon(itemValue);
-    return await Item.create({ itemName: `Catch ${name}` });
+    return await ItemDOAService.createItem(`Catch ${name}`);
   } catch (error) {
-    return await Item.create({
-      itemName: `Pokemon with ID ${itemValue} was not found`,
-    });
+    return await ItemDOAService.createItem(
+      `Pokemon with ID ${itemValue} was not found`
+    );
   }
 }
 
@@ -56,21 +45,19 @@ async function fetchAndAddManyPokemon(itemValue) {
       itemValue.replaceAll(" ", "").split(",")
     );
 
-    const pokemonItem = pokemons.map((pokemon) => {
-      return { itemName: `Catch ${pokemon.name}` };
-    });
-    return await Item.bulkCreate(pokemonItem);
+    const pokemonsItemName = pokemons.map((pokemon) => `Catch ${pokemon.name}`);
+    return await ItemDOAService.createItems(pokemonsItemName);
   } catch (error) {
-    return await Item.create({
-      itemName: `Failed to fetch pokemon with this input: ${itemValue}`,
-    });
+    return await ItemDOAService.createItem(
+      `Failed to fetch pokemon with this input: ${itemValue}`
+    );
   }
 }
 
 function isNumber(value) {
   return !isNaN(Number(value));
 }
-function isList(value) {
+function isNumberList(value) {
   return value.split(",").every(isNumber);
 }
 

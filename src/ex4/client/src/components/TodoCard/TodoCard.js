@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { apiDeleteTodo, apiUpdateStatus } from "../../services/TodoApiServies";
 import "./TodoCard.css";
+import { BsTrash } from "react-icons/bs";
+import PropTypes from "prop-types";
 
 const TodoCard = ({ id, value, status, todos, setTodos }) => {
   const [todoStatus, setTodoStatus] = useState(status);
-
   const handleDelete = (e) => {
     e.preventDefault();
     apiDeleteTodo(id).then((data) => {
@@ -16,6 +17,14 @@ const TodoCard = ({ id, value, status, todos, setTodos }) => {
     e.preventDefault();
     apiUpdateStatus(id, !todoStatus).then((data) => {
       setTodoStatus(!todoStatus);
+      setTodos(
+        todos.map((todo) => {
+          if (todo.id === id) {
+            todo.status = !todo.status;
+          }
+          return todo;
+        })
+      );
     });
   };
 
@@ -30,15 +39,22 @@ const TodoCard = ({ id, value, status, todos, setTodos }) => {
         />
         <p className="todo-value">{value}</p>
       </div>
-      <img
-        src="https://icons-for-free.com/iconfiles/png/512/delete+remove+trash+trash+bin+trash+can+icon-1320073117929397588.png"
-        alt=""
+      <BsTrash
         className="trash-icon"
+        size="25px"
         id={id}
         onClick={handleDelete}
       />
     </li>
   );
+};
+
+TodoCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
+  status: PropTypes.bool.isRequired,
+  todos: PropTypes.array.isRequired,
+  setTodos: PropTypes.func.isRequired,
 };
 
 export default TodoCard;
