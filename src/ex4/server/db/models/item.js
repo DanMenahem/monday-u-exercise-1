@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Item.init({
-    itemName: DataTypes.STRING,
+    name: DataTypes.STRING,
     status: DataTypes.BOOLEAN
   }, {
     sequelize,
