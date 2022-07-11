@@ -1,31 +1,21 @@
 import React, { useState } from "react";
-import { apiDeleteTodo, apiUpdateStatus } from "../../services/TodoApiServies";
 import "./TodoCard.css";
 import { BsTrash } from "react-icons/bs";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { deleteTodo, updateTodoStatus } from "../../redux/actions";
 
-const TodoCard = ({ id, value, status, todos, setTodos }) => {
-  const [todoStatus, setTodoStatus] = useState(status);
+const TodoCard = ({ todo }) => {
+  const dispatch = useDispatch();
+  const { id, name, status } = todo;
+
   const handleDelete = (e) => {
     e.preventDefault();
-    apiDeleteTodo(id).then((data) => {
-      setTodos(todos.filter((todo) => todo.id !== id));
-    });
+    dispatch(deleteTodo(id));
   };
 
   const handleStatusChange = (e) => {
     e.preventDefault();
-    apiUpdateStatus(id, !todoStatus).then((data) => {
-      setTodoStatus(!todoStatus);
-      setTodos(
-        todos.map((todo) => {
-          if (todo.id === id) {
-            todo.status = !todo.status;
-          }
-          return todo;
-        })
-      );
-    });
+    dispatch(updateTodoStatus(id, !status));
   };
 
   return (
@@ -34,10 +24,10 @@ const TodoCard = ({ id, value, status, todos, setTodos }) => {
         <input
           type="checkbox"
           className="todo-checkbox"
-          checked={todoStatus}
+          checked={status}
           onChange={handleStatusChange}
         />
-        <p className="todo-value">{value}</p>
+        <p className="todo-value">{name}</p>
       </div>
       <BsTrash
         className="trash-icon"
@@ -47,14 +37,6 @@ const TodoCard = ({ id, value, status, todos, setTodos }) => {
       />
     </li>
   );
-};
-
-TodoCard.propTypes = {
-  id: PropTypes.number.isRequired,
-  value: PropTypes.string.isRequired,
-  status: PropTypes.bool.isRequired,
-  todos: PropTypes.array.isRequired,
-  setTodos: PropTypes.func.isRequired,
 };
 
 export default TodoCard;

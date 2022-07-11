@@ -9,9 +9,9 @@ async function apiGetTodos() {
   }
 }
 
-async function apiSetTodo(todo) {
+async function apiSetTodo(name) {
   try {
-    const { data } = await axios.post("/item", { value: todo });
+    const { data } = await axios.post("/item", { value: name });
     return data;
   } catch (error) {
     console.log("Error:", error);
@@ -44,7 +44,7 @@ async function apiDeleteAll() {
   }
 }
 
-export {
+export default {
   apiGetTodos,
   apiSetTodo,
   apiDeleteTodo,

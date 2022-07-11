@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import "./TodoFooter.css";
-import { apiDeleteAll } from "../../services/TodoApiServies";
-import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteAllTodos } from "../../redux/actions";
 
-const TodoFooter = ({ todos, setTodos }) => {
+const TodoFooter = () => {
+  const dispatch = useDispatch();
+  const { todos } = useSelector((state) => state.todosReducer);
   const [pendingTasks, setPendingTasks] = useState(0);
 
   useEffect(() => {
@@ -12,9 +14,7 @@ const TodoFooter = ({ todos, setTodos }) => {
   }, [todos]);
 
   const hendleDeleteAll = () => {
-    apiDeleteAll().then(() => {
-      setTodos([]);
-    });
+    dispatch(deleteAllTodos());
   };
 
   return (
@@ -28,11 +28,6 @@ const TodoFooter = ({ todos, setTodos }) => {
       />
     </div>
   );
-};
-
-TodoFooter.propTypes = {
-  todos: PropTypes.array.isRequired,
-  setTodos: PropTypes.func.isRequired,
 };
 
 export default TodoFooter;
