@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import "./TodoFooter.css";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAllTodos } from "../../redux/todos/actions";
+import { deleteAllTodos } from "../../redux/actions";
 
 const TodoFooter = () => {
   const dispatch = useDispatch();

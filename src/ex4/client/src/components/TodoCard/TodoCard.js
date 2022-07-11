@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "./TodoCard.css";
 import { BsTrash } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { deleteTodo, updateTodoStatus } from "../../redux/todos/actions";
+import { deleteTodo, updateTodoStatus } from "../../redux/actions";
 
-const TodoCard = ({ id, value, status }) => {
+const TodoCard = ({ todo }) => {
   const dispatch = useDispatch();
+  const { id, name, status } = todo;
 
   const handleDelete = (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ const TodoCard = ({ id, value, status }) => {
           checked={status}
           onChange={handleStatusChange}
         />
-        <p className="todo-value">{value}</p>
+        <p className="todo-value">{name}</p>
       </div>
       <BsTrash
         className="trash-icon"

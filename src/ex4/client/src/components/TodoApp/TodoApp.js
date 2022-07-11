@@ -4,7 +4,7 @@ import TodoInput from "../TodoInput/TodoInput";
 import TodoList from "../TodoList/TodoList";
 import "./TodoApp.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllTodos } from "../../redux/todos/actions";
+import { getAllTodos } from "../../redux/actions";
 
 const TodoApp = () => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./TodoInput.css";
 import Button from "../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setTodo } from "../../redux/todos/actions";
+import { setTodo } from "../../redux/actions";
 
 const TodoInput = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,6 @@ const TodoInput = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setInputValue("");
-    console.log(inputValue);
     dispatch(setTodo(inputValue));
   };
 
